@@ -7,7 +7,7 @@ MainWindow :: MainWindow(QWidget * parent) :
     centralWidget = new QWidget(this);
     setCentralWidget(centralWidget);
     layout = new QGridLayout(centralWidget);
-    int size = 5;
+    int size = SIZE_OF_FIELD;
     fields.resize(size);
     for(int i = 0; i < size ; ++i) {
         fields [i].resize(size);
@@ -44,56 +44,67 @@ void MainWindow :: lose() {
     }
 }
 
+bool MainWindow::isOpenable(int row, int col) {
+    if ((row == -1) or (col == -1))
+        return false;
+    if ((row == fields.size()) or (col == fields.size()))
+        return false;
+    if (fields[row][col] -> getValue() == -1)
+        return false;
+    if (fields[row][col] -> isClosed() == false)
+        return false;
+    return true;
+}
 
 void MainWindow::openAround(int row, int col) {
     if (fields[row][col] -> getValue() == -1)
         return;
     qDebug() << "I AM GROOT\n";
-    if ((col != 0) and fields[row][col - 1] -> isClosed() and (fields[row][col - 1] -> getValue() != -1)) {
+    if (isOpenable(row, col - 1)) {
         fields[row][col - 1]->showValue();
         if (fields[row][col - 1]->getValue() == 0)
             openAround(row, col - 1);
         notBombFound++;
     }
 
-    if ((row != 0) and (col != 0) and fields[row - 1][col - 1] -> isClosed() and (fields[row - 1][col - 1] -> getValue() != -1)) {
+    if (isOpenable(row - 1, col - 1)) {
         fields[row - 1][col - 1]->showValue();
         if (fields[row - 1][col - 1]->getValue() == 0)
             openAround(row - 1, col - 1);
         notBombFound++;
     }
 
-    if ((row != 0) and fields[row - 1][col] -> isClosed() and (fields[row - 1][col] -> getValue() != -1)) {
+    if (isOpenable(row - 1, col)) {
         fields[row - 1][col]->showValue();
         if (fields[row - 1][col]->getValue() == 0)
             openAround(row - 1, col);
         notBombFound++;
     }
-    if ((row != 0) and (col != fields.size() - 1) and fields[row - 1][col + 1] -> isClosed() and (fields[row - 1][col + 1] -> getValue() != -1)) {
+    if (isOpenable(row - 1, col + 1)) {
         fields[row - 1][col + 1]->showValue();
         if (fields[row - 1][col + 1]->getValue() == 0)
             openAround(row - 1, col + 1);
         notBombFound++;
     }
-    if ((col != fields.size() - 1) and fields[row][col + 1] -> isClosed() and (fields[row][col + 1] -> getValue() != -1)) {
+    if (isOpenable(row, col + 1)) {
         fields[row][col + 1]->showValue();
         if (fields[row][col + 1]->getValue() == 0)
             openAround(row, col + 1);
         notBombFound++;
     }
-    if ((row != fields.size() - 1) and (col != fields.size() - 1) and fields[row + 1][col + 1] -> isClosed() and (fields[row + 1][col + 1] -> getValue() != -1)) {
+    if (isOpenable(row + 1, col + 1)) {
         fields[row + 1][col + 1]->showValue();
         if (fields[row + 1][col + 1]->getValue() == 0)
             openAround(row + 1, col + 1);
         notBombFound++;
     }
-    if ((row != fields.size() - 1) and fields[row + 1][col] -> isClosed() and (fields[row + 1][col] -> getValue() != -1)) {
+    if (isOpenable(row + 1, col)) {
         fields[row + 1][col]->showValue();
         if (fields[row + 1][col]->getValue() == 0)
             openAround(row + 1, col);
         notBombFound++;
     }
-    if ((col != 0) and (row != fields.size() - 1) and fields[row + 1][col - 1] -> isClosed() and  (fields[row + 1][col - 1] -> getValue() != -1)) {
+    if (isOpenable(row + 1, col - 1)) {
         fields[row + 1][col - 1]->showValue();
         if (fields[row + 1][col - 1]->getValue() == 0)
             openAround(row + 1, col - 1);

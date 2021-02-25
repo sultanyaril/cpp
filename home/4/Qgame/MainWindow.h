@@ -5,8 +5,8 @@
 #include <QVector>
 #include "field.h"
 
-#define NUMBER_OF_BOMBS 5
-
+#define NUMBER_OF_BOMBS 10
+#define SIZE_OF_FIELD 8
 class MainWindow : public QMainWindow {
     Q_OBJECT
     QWidget * centralWidget ;
@@ -14,6 +14,7 @@ class MainWindow : public QMainWindow {
     QVector <QVector<Field *>> fields ;
     int notBombFound;  // ячейки-не-бомбы
 public :
+    bool isOpenable(int, int);
     void win();
     void lose();
     void openAround(int, int);
