@@ -4,7 +4,7 @@
 #include <QVector2D>
 #include <QSize>
 #include <QPixmap>
-#define NOB 3 // number of balls
+#define NOB 10 // number of balls
 class Game {
   QSize size;
   QVector2D position[NOB];

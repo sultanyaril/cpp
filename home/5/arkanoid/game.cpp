@@ -24,10 +24,10 @@ Game::Game() {
         } while (flag == true);
 
         position[i] = QVector2D(x, y);
-        velocity[i] = QVector2D(rand() % 100 / 10, rand() % 100 / 10);
+        velocity[i] = QVector2D(rand() % 300 / 10, rand() % 300 / 10);
         gravity[i] = QVector2D(0.0, 0.0);
    }
-    tau = 1.0;
+    tau = 0.05;
     texture_ball = new QPixmap("pictures/ball.png");
 
 }
